@@ -15,19 +15,21 @@ async function calculadora(operacao, num1, num2) {
     }
     return resultado
   } catch (error) {
-    throw new Error(`Erro ao ler o arquivo JSON: ${error} `);
+
   }
 }
 
+// boa sorte pra terminar isso ai
 app.get('/calculadora', async(req, res) => {
   try {
     const { operacao } = req.query;
     const { num1 } = req.query;
     const { num2 } = req.query;
-
-    res.send()
+    resultadoFinal = calculadora(operacao, num1, num2);
+    res.send(resultadoFinal)
+    res.status(200)
   } catch (error) {    
-    res.status(500).json({ erro: error.message});
+    res.status(500)
   }
 });
 
