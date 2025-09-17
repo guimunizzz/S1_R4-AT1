@@ -2,34 +2,33 @@ const app = require('express')();
 
 const PORT = 3006;
 
-async function calculadora(operacao, num1, num2) {
-  try {
-    if (operacao == soma) {
-      resultado = num1 + num2;
-    } else if (operacao == subtracao) {
-      resultado = num1 - num2;
-    } else if (operacao == multiplicacao) {
-      resultado = num1 * num2;
-    } else if (operacao == divisao) {
-      resultado = num1 / num2;
+function calculadora(operacao, num1, num2) {
+  if (operacao === "soma") {
+      return num1 + num2;
+    } else if (operacao === "subtracao") {
+      return num1 - num2;
+    } else if (operacao === "multiplicacao") {
+      return num1 * num2;
+    } else if (operacao === "divisao") {
+      if (num2 == 0) {
+        throw new Error("Divisão por zero não é permitida.");
+      }
+      return num1 / num2;
+    } else {
+      throw new Error('Operação inválida. Use "soma", "subtracao", "multiplicacao" ou "divisao".');
     }
-    return resultado
-  } catch (error) {
-
-  }
 }
 
-// boa sorte pra terminar isso ai
 app.get('/calculadora', async(req, res) => {
   try {
-    const { operacao } = req.query;
-    const { num1 } = req.query;
-    const { num2 } = req.query;
-    resultadoFinal = calculadora(operacao, num1, num2);
-    res.send(resultadoFinal)
-    res.status(200)
+    const { num1 ,num2 , operacao } = req.query;
+    const n1 = parseFloat(num1);
+    const n2 = parseFloat(num2);
+
+    resultadoFinal = calculadora(operacao, n1, n2);
+    res.status(200).send(`Resultado: ${resultadoFinal}`);
   } catch (error) {    
-    res.status(500)
+    res.status(400).send(`Erro: ${error.message}`);
   }
 });
 
