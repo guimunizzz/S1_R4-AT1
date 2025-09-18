@@ -1,11 +1,10 @@
-const app = require('express')();
+const app = require("express")();
 const PORT = 3008;
 
-
-app.get('/operacao/:tipo', async(req, res) => {
+app.get("/operacao/:tipo", async (req, res) => {
   try {
-    const operador = (req.params.tipo);
-    const { num1 ,num2 } = req.query;
+    const operador = req.params.tipo;
+    const { num1, num2 } = req.query;
     const n1 = parseFloat(num1);
     const n2 = parseFloat(num2);
 
@@ -42,11 +41,11 @@ app.get('/operacao/:tipo', async(req, res) => {
       }
     }
   } catch (error) {
-      res.status(500).json({ erro: error.message});
+    res.status(500).json({ erro: error.message });
   }
-})
+});
 
 // start server on the port 3008
 app.listen(PORT, () => {
   console.log(`Servidor executando na porta ${PORT}`);
-})
+});
