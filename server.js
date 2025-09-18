@@ -2,9 +2,6 @@ const app = require('express')();
 const PORT = 3004;
 
 
-
-
-
 app.get('/soma/:num1/:num2', async(req, res) => {
   try {
     const n1 = parseFloat(req.params.num1);
