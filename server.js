@@ -1,44 +1,18 @@
 const app = require('express')();
-const PORT = 3008;
+const PORT = 3010;
 
 
-app.get('/operacao/:tipo', async(req, res) => {
+app.get('/ano/:ano', async(req, res) => {
   try {
-    const operador = (req.params.tipo);
-    const { num1 ,num2 } = req.query;
-    const n1 = parseFloat(num1);
-    const n2 = parseFloat(num2);
+    const anoDigitado = parseInt(req.params.ano);
 
-    if (isNaN(n1) || isNaN(n2)) {
-      res.status(400).send("ERRO - digite um numero!");
+    if (isNaN(anoDigitado)) {
+      res.status(400).send("ERRO - digite um ano válido!");
     } else {
-      switch (operador) {
-        case "soma":
-          const adicao = n1 + n2;
-          res.send(`O resultado da soma é ${adicao}`);
-          break;
-
-        case "subtracao":
-          const subtrair = n1 - n2;
-          res.send(`O resultado da subtração é ${subtrair}`);
-          break;
-
-        case "multiplicacao":
-          const multiplicar = n1 * n2;
-          res.send(`O resultado da subtração é ${multiplicar}`);
-          break;
-
-        case "divisao":
-          if (n2 == 0) {
-            res.status(400).send("ERRO - Não é possivel dividir por zero!");
-          } else {
-            const dividir = n1 / n2;
-            res.send(`O resultado da subtração é ${dividir}`);
-            break;
-          }
-        default:
-          res.send("Digite uma operação valida");
-          break;
+      if ((anoDigitado % 4 == 0) && (anoDigitado % 100 != 0) || (anoDigitado % 400 == 0)) {
+        res.send(`O ano ${anoDigitado} é bissexto!`);
+      } else {
+        res.send(`O ano ${anoDigitado} não é bissexto!`);
       }
     }
   } catch (error) {
@@ -46,7 +20,7 @@ app.get('/operacao/:tipo', async(req, res) => {
   }
 })
 
-// start server on the port 3008
+// start server on the port 3010
 app.listen(PORT, () => {
   console.log(`Servidor executando na porta ${PORT}`);
 })
