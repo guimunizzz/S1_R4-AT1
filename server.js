@@ -1,8 +1,7 @@
-const app = require('express')();
+const app = require("express")();
 const PORT = 3004;
 
-
-app.get('/soma/:num1/:num2', async(req, res) => {
+app.get("/soma/:num1/:num2", async (req, res) => {
   try {
     const n1 = parseFloat(req.params.num1);
     const n2 = parseFloat(req.params.num2);
@@ -13,11 +12,11 @@ app.get('/soma/:num1/:num2', async(req, res) => {
       res.send(`O resultado da soma é ${adicao}`);
     }
   } catch (error) {
-      res.status(500).json({ erro: error.message});
+    res.status(500).json({ erro: error.message });
   }
-})
+});
 
-app.get('/subtracao/:num1/:num2', async(req, res) => {
+app.get("/subtracao/:num1/:num2", async (req, res) => {
   try {
     const n1 = parseFloat(req.params.num1);
     const n2 = parseFloat(req.params.num2);
@@ -28,10 +27,10 @@ app.get('/subtracao/:num1/:num2', async(req, res) => {
       res.send(`O resultado da soma é ${subtrair}`);
     }
   } catch (error) {
-      res.status(500).json({ erro: error.message});
+    res.status(500).json({ erro: error.message });
   }
-})
-app.get('/multiplicacao/:num1/:num2', async(req, res) => {
+});
+app.get("/multiplicacao/:num1/:num2", async (req, res) => {
   try {
     const n1 = parseFloat(req.params.num1);
     const n2 = parseFloat(req.params.num2);
@@ -42,10 +41,10 @@ app.get('/multiplicacao/:num1/:num2', async(req, res) => {
       res.send(`O resultado da soma é ${multiplicar}`);
     }
   } catch (error) {
-      res.status(500).json({ erro: error.message});
+    res.status(500).json({ erro: error.message });
   }
-})
-app.get('/divisao/:num1/:num2', async(req, res) => {
+});
+app.get("/divisao/:num1/:num2", async (req, res) => {
   try {
     const n1 = parseFloat(req.params.num1);
     const n2 = parseFloat(req.params.num2);
@@ -60,11 +59,11 @@ app.get('/divisao/:num1/:num2', async(req, res) => {
       }
     }
   } catch (error) {
-      res.status(500).json({ erro: error.message});
+    res.status(500).json({ erro: error.message });
   }
-})
+});
 
 // start server on the port 3004
 app.listen(PORT, () => {
   console.log(`Servidor executando na porta ${PORT}`);
-})
+});
