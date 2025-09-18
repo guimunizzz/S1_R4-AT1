@@ -1,32 +1,34 @@
-const app = require('express')();
-const PORT = 3012;
+const app = require("express")();
+const PORT = 3014;
 
-
-app.get('/saudacao/:nome', async(req, res) => {
+app.get("/imc", async (req, res) => {
   try {
-    const nomeUsuario = (req.params.nome);
-    const { hora } = req.query;
-    const horaDigitada = parseInt(hora);
+    const { peso, altura } = req.query;
+    const pesoDigitado = parseFloat(peso);
+    const alturaDigitado = parseFloat(altura);
 
-    if (isNaN(horaDigitada)) {
-      res.status(400).send("ERRO - digite uma numero válido!");
+    if (isNaN(pesoDigitado) || isNaN(alturaDigitado)) {
+      res.status(400).send("ERRO - digite numeros válidos!");
     } else {
-      if (horaDigitada >= 6 && horaDigitada < 12) {
-        res.send(`Bom dia, ${nomeUsuario}`);
-      } else if (horaDigitada >= 12 && horaDigitada < 18) {
-        res.send(`Boa tarde, ${nomeUsuario}`);
-      } else if (horaDigitada >= 18 && horaDigitada <= 23 || horaDigitada >= 0 && horaDigitada < 6) {
-        res.send(`Boa noite, ${nomeUsuario}`);
-      } else {
-        res.status(400).send("ERRO - digite uma hora válida!");
+      const imc = pesoDigitado / (alturaDigitado * alturaDigitado);
+      const imcFormatado = imc.toFixed(2);
+
+      if (imcFormatado < 18.5) {
+        res.send(`Seu imc é ${imcFormatado}, sua classificação é baixo peso!`);
+      } else if (imcFormatado >= 18.5 && imcFormatado < 25) {
+        res.send(`Seu imc é ${imc}, sua classificação é normal!`);
+      } else if (imcFormatado >= 25 && imcFormatado < 30) {
+        res.send(`Seu imc é ${imcFormatado}, sua classificação é sobrepeso!`);
+      } else if (imcFormatado >= 30) {
+        res.send(`Seu imc é ${imcFormatado}, sua classificação é obesidade!`);
       }
     }
   } catch (error) {
-      res.status(500).json({ erro: error.message});
+    res.status(500).json({ erro: error.message });
   }
-})
+});
 
-// start server on the port 3012
+// start server on the port 3014
 app.listen(PORT, () => {
   console.log(`Servidor executando na porta ${PORT}`);
-})
+});
